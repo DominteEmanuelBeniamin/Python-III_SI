@@ -80,7 +80,6 @@ print(validate_dict(s, d))
 
 def set_operations(*sets):
     results = {}
-
     for i, a in enumerate(sets):
         for j, b in enumerate(sets):
             if i < j:
@@ -88,12 +87,18 @@ def set_operations(*sets):
                 results[f"{a} & {b}"] = a & b
                 results[f"{a} - {b}"] = a - b
                 results[f"{b} - {a}"] = b - a
-
     return results
+
+def count_unique_duplicates(lst):
+    unique_elements = set(lst)
+    a = len(unique_elements)
+    b = len(lst) - a
+    return a, b
 
 lst = [1, 2, 2, 3, 4, 4, 4, 5]
 result = count_unique_duplicates(lst)
 print(result)
+
 
 def traverse_mapping(mapping):
     result = []
