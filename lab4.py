@@ -62,3 +62,81 @@ print(q.pop())
 print(q.peek())
 print(q.pop())
 print(q.pop())
+
+class Matrix:
+    def __init__(self, n, m):
+        self.n = n
+        self.m = m
+        self.data = []
+        for i in range(n):
+            row = [0] * m
+            self.data.append(row)
+
+    def get(self, i, j):
+        if 0 <= i < self.n and 0 <= j < self.m:
+            return self.data[i][j]
+        return None
+
+    def set(self, i, j, value):
+        if 0 <= i < self.n and 0 <= j < self.m:
+            self.data[i][j] = value
+
+    def transpose(self):
+        transposed = Matrix(self.m, self.n)
+        for i in range(len(self.data)):
+            for j in range(len(self.data[i])):
+                transposed.data[j][i] = self.data[i][j]
+        return transposed
+
+    def multiply(self, other):
+        if self.m != other.n:
+            return None
+        result = Matrix(self.n, other.m)
+        for i in range(self.n):
+            for j in range(other.m):
+                total = 0
+                for k in range(self.m):
+                    val1 = self.data[i][k]
+                    val2 = other.data[k][j]
+                    total = total + (val1 * val2)
+                result.data[i][j] = total
+        return result
+
+    def apply(self, func):
+        for i in range(self.n):
+            for j in range(self.m):
+                value = self.get(i, j)
+                if value is not None:
+                    new_value = func(value)
+                    self.set(i, j, new_value)
+
+    def __str__(self):
+        matrix_str = ""
+        for row in self.data:
+            row_str = ""
+            for value in row:
+                row_str += str(value) + "  "
+            matrix_str += row_str.strip() + "\n"
+        return matrix_str.strip()
+
+
+matrix = Matrix(3, 3)
+matrix.set(0, 0, 2)
+matrix.set(0, 1, 4)
+matrix.set(0, 2, 6)
+matrix.set(1, 0, 8)
+matrix.set(1, 1, 5)
+matrix.set(1, 2, 3)
+matrix.set(2, 0, 7)
+matrix.set(2, 1, 8)
+matrix.set(2, 2, 1)
+
+print("Original matrix:")
+print(matrix)
+
+print("\nTransposed matrix:")
+print(matrix.transpose())
+
+print("\nAfter applying transformation (add 1 to each element):")
+matrix.apply(lambda x: x + 1)
+print(matrix)
